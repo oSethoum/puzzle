@@ -20,12 +20,56 @@ public class Puzzle {
     recursive(start);
   }
 
-  private void recursive(Integer[][] array) {
+  private boolean recursive(Integer[][] array) {
+
     var config = getConfig(array);
-    System.out.println("Config");
-    for (Integer[][] c : config) {
-      display(c);
+
+    // initialize the lowest
+    var current = config.get(0);
+    var g = difference(current, start);
+    var h = difference(current, end);
+    var chosenIndex = 0;
+    if (h == 0) {
+      System.out.println("Solved");
+      display(array);
+      return true;
     }
+
+    var lowest = g + h;
+
+    for (int i = 1; i < config.size(); i++) {
+      current = config.get(i);
+      g = difference(current, start);
+      h = difference(current, end);
+
+      if (h == 0) {
+        System.out.println("Solved");
+        display(array);
+        return true;
+      }
+
+      var f = g + h;
+
+      if (f < lowest) {
+        lowest = f;
+        chosenIndex = i;
+      }
+
+    }
+
+    return recursive(config.get(chosenIndex));
+  }
+
+  private int difference(Integer[][] a, Integer[][] b) {
+    var diff = 0;
+    for (int i = 0; i < b.length; i++) {
+      for (int j = 0; j < b.length; j++) {
+        if (a[i][j] != b[i][j] && a[i][j] != 0 && b[i][j] != 0) {
+          diff++;
+        }
+      }
+    }
+    return diff;
   }
 
   private void display(Integer[][] array) {
