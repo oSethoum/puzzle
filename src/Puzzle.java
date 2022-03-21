@@ -23,6 +23,8 @@ public class Puzzle {
   private boolean recursive(Integer[][] array) {
 
     var config = getConfig(array);
+    // show config
+    showConfig(config, array);
 
     // initialize the lowest
     var current = config.get(0);
@@ -54,9 +56,7 @@ public class Puzzle {
         lowest = f;
         chosenIndex = i;
       }
-
     }
-
     return recursive(config.get(chosenIndex));
   }
 
@@ -69,6 +69,7 @@ public class Puzzle {
         }
       }
     }
+    // substracte the case of 0
     if (diff > 0) {
       diff--;
     }
@@ -81,6 +82,18 @@ public class Puzzle {
         System.out.print(is2 + "\t");
       }
       System.out.println("\n");
+    }
+  }
+
+  private void showConfig(ArrayList<Integer[][]> config, Integer[][] array) {
+    System.out.println("-------------------------------------------------");
+    display(array);
+    System.out.println("\t|");
+    System.out.println("\t|");
+
+    for (int i = 0; i < config.size(); i++) {
+      display(config.get(i));
+      System.out.println("-------------------");
     }
   }
 
@@ -142,15 +155,6 @@ public class Puzzle {
       }
     }
     return config;
-  }
-
-  public void move_test() {
-    Integer[][] arr = { { 1, 0 }, { 2, 3 } };
-    Integer[][] arr2 = { { 2, 1 }, { 0, 3 } };
-    display(move(0, 1, Direction.DOWN, arr));
-    display(move(0, 1, Direction.LEFT, arr));
-    display(move(1, 0, Direction.RIGHT, arr2));
-    display(move(1, 0, Direction.UP, arr2));
   }
 
   Integer[][] clone(Integer[][] array) {
@@ -232,16 +236,6 @@ public class Puzzle {
       }
       System.out.println("\n");
     }
-  }
-
-  private boolean verify(int[][] a, int[][] b) {
-    for (int i = 0; i < a.length; i++) {
-      for (int j = 0; j < a.length; j++) {
-        if (a[i][j] != b[i][j])
-          return false;
-      }
-    }
-    return true;
   }
 
 }
