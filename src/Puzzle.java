@@ -31,7 +31,7 @@ public class Puzzle {
     var chosenIndex = 0;
     if (h == 0) {
       System.out.println("Solved");
-      display(array);
+      display(current);
       return true;
     }
 
@@ -44,7 +44,7 @@ public class Puzzle {
 
       if (h == 0) {
         System.out.println("Solved");
-        display(array);
+        display(current);
         return true;
       }
 
@@ -64,10 +64,13 @@ public class Puzzle {
     var diff = 0;
     for (int i = 0; i < b.length; i++) {
       for (int j = 0; j < b.length; j++) {
-        if (a[i][j] != b[i][j] && a[i][j] != 0 && b[i][j] != 0) {
+        if (a[i][j] != b[i][j]) {
           diff++;
         }
       }
+    }
+    if (diff > 0) {
+      diff--;
     }
     return diff;
   }
